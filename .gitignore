@@ -30,6 +30,10 @@ fp-info-cache
 
 # Gerber files
 pcb/gerber
+# Generated BOM
+pcb/bom/*
+# Generated report
+pcb/report.txt
 
 # Build files
 .build
