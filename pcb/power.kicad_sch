@@ -5,11 +5,11 @@
   (paper "A4")
 
   (lib_symbols
-    (symbol "Connector:Conn_01x01_Pin" (pin_names (offset 1.016) hide) (in_bom yes) (on_board yes)
+    (symbol "Connector:Conn_01x02_Pin" (pin_names (offset 1.016) hide) (in_bom yes) (on_board yes)
       (property "Reference" "J" (at 0 2.54 0)
         (effects (font (size 1.27 1.27)))
       )
-      (property "Value" "Conn_01x01_Pin" (at 0 -2.54 0)
+      (property "Value" "Conn_01x02_Pin" (at 0 -5.08 0)
         (effects (font (size 1.27 1.27)))
       )
       (property "Footprint" "" (at 0 0 0)
@@ -24,13 +24,21 @@
       (property "ki_keywords" "connector" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (property "ki_description" "Generic connector, single row, 01x01, script generated" (at 0 0 0)
+      (property "ki_description" "Generic connector, single row, 01x02, script generated" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
       (property "ki_fp_filters" "Connector*:*_1x??_*" (at 0 0 0)
         (effects (font (size 1.27 1.27)) hide)
       )
-      (symbol "Conn_01x01_Pin_1_1"
+      (symbol "Conn_01x02_Pin_1_1"
+        (polyline
+          (pts
+            (xy 1.27 -2.54)
+            (xy 0.8636 -2.54)
+          )
+          (stroke (width 0.1524) (type default))
+          (fill (type none))
+        )
         (polyline
           (pts
             (xy 1.27 0)
@@ -39,6 +47,10 @@
           (stroke (width 0.1524) (type default))
           (fill (type none))
         )
+        (rectangle (start 0.8636 -2.413) (end 0 -2.667)
+          (stroke (width 0.1524) (type default))
+          (fill (type outline))
+        )
         (rectangle (start 0.8636 0.127) (end 0 -0.127)
           (stroke (width 0.1524) (type default))
           (fill (type outline))
@@ -46,6 +58,10 @@
         (pin passive line (at 5.08 0 180) (length 3.81)
           (name "Pin_1" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
+        )
+        (pin passive line (at 5.08 -2.54 180) (length 3.81)
+          (name "Pin_2" (effects (font (size 1.27 1.27))))
+          (number "2" (effects (font (size 1.27 1.27))))
         )
       )
     )
@@ -1114,7 +1130,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR028") (unit 1)
+          (reference "#PWR029") (unit 1)
         )
       )
     )
@@ -1123,7 +1139,7 @@
   (symbol (lib_id "power:-BATT") (at 99.06 72.39 270) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 0733451d-a89f-4a5f-a0b7-4f10681fc931)
-    (property "Reference" "#PWR031" (at 95.25 72.39 0)
+    (property "Reference" "#PWR032" (at 95.25 72.39 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "-BATT" (at 102.235 72.7068 90)
@@ -1139,7 +1155,7 @@
     (instances
       (project "RoomSensor"
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR031") (unit 1)
+          (reference "#PWR032") (unit 1)
         )
       )
     )
@@ -1167,7 +1183,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR040") (unit 1)
+          (reference "#PWR042") (unit 1)
         )
       )
     )
@@ -1176,7 +1192,7 @@
   (symbol (lib_id "Device:R_Small") (at 109.855 51.435 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 0cc80ccf-fefb-4c0e-bacf-e53dbad87166)
-    (property "Reference" "R14" (at 113.665 50.8 90)
+    (property "Reference" "R18" (at 113.665 50.8 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "4k" (at 109.855 51.435 90)
@@ -1193,7 +1209,7 @@
     (instances
       (project "RoomSensor"
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "R14") (unit 1)
+          (reference "R18") (unit 1)
         )
       )
     )
@@ -1221,7 +1237,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR038") (unit 1)
+          (reference "#PWR040") (unit 1)
         )
       )
     )
@@ -1251,31 +1267,6 @@
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
           (reference "C16") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "Connector:Conn_01x01_Pin") (at 104.775 41.91 90) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid 19bc2e09-29fb-4539-8758-31b77376bb3e)
-    (property "Reference" "J4" (at 105.6132 40.6313 90)
-      (effects (font (size 1.27 1.27)) (justify right))
-    )
-    (property "Value" "external supply" (at 105.6132 42.5523 90)
-      (effects (font (size 1.27 1.27)) (justify right))
-    )
-    (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" (at 104.775 41.91 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 104.775 41.91 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid 9e7aaf1a-da0d-4a51-bdbb-b4ae31bdf2cc))
-    (instances
-      (project "RoomSensor"
-        (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "J4") (unit 1)
         )
       )
     )
@@ -1365,7 +1356,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR037") (unit 1)
+          (reference "#PWR039") (unit 1)
         )
       )
     )
@@ -1435,6 +1426,34 @@
     )
   )
 
+  (symbol (lib_id "power:+BATT") (at 106.045 37.465 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid 42aa94c1-a9c1-4620-94f3-7ec6b5ab2422)
+    (property "Reference" "#PWR?" (at 106.045 41.275 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+BATT" (at 105.7275 32.0675 90)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 106.045 37.465 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 106.045 37.465 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid fc098f7b-f9c8-4963-bd2b-2e807920e7bd))
+    (instances
+      (project "RoomSensor"
+        (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2"
+          (reference "#PWR?") (unit 1)
+        )
+        (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
+          (reference "#PWR034") (unit 1)
+        )
+      )
+    )
+  )
+
   (symbol (lib_id "Device:LED_Small") (at 146.685 53.975 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 48514cd3-6c09-484d-b291-71701034c6cf)
@@ -1490,7 +1509,7 @@
   (symbol (lib_id "power:-BATT") (at 112.395 48.895 90) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 53f4a5ca-5fce-416b-8a8a-048c89075fed)
-    (property "Reference" "#PWR034" (at 116.205 48.895 0)
+    (property "Reference" "#PWR036" (at 116.205 48.895 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "-BATT" (at 109.22 49.2118 90)
@@ -1506,7 +1525,7 @@
     (instances
       (project "RoomSensor"
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR034") (unit 1)
+          (reference "#PWR036") (unit 1)
         )
       )
     )
@@ -1515,7 +1534,7 @@
   (symbol (lib_id "Device:R_Small") (at 140.335 53.975 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 5529103f-387a-451b-b6cf-2a2f73278599)
-    (property "Reference" "R16" (at 136.525 53.34 90)
+    (property "Reference" "R20" (at 136.525 53.34 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "1k" (at 140.335 53.975 90)
@@ -1532,7 +1551,7 @@
     (instances
       (project "RoomSensor"
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "R16") (unit 1)
+          (reference "R20") (unit 1)
         )
       )
     )
@@ -1560,7 +1579,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR045") (unit 1)
+          (reference "#PWR047") (unit 1)
         )
       )
     )
@@ -1569,7 +1588,7 @@
   (symbol (lib_id "Device:R_Small") (at 140.335 51.435 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 67e01c72-ecdd-4b41-a262-0f9d8101b1a9)
-    (property "Reference" "R15" (at 136.525 50.8 90)
+    (property "Reference" "R19" (at 136.525 50.8 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "1k" (at 140.335 51.435 90)
@@ -1586,7 +1605,33 @@
     (instances
       (project "RoomSensor"
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "R15") (unit 1)
+          (reference "R19") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Connector:Conn_01x02_Pin") (at 103.505 42.545 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 6b559c01-4fd8-400b-83c6-0756bc4e3606)
+    (property "Reference" "J6" (at 106.8832 41.2663 90)
+      (effects (font (size 1.27 1.27)) (justify right))
+    )
+    (property "Value" "Conn_01x02_Pin" (at 106.8832 43.1873 90)
+      (effects (font (size 1.27 1.27)) (justify right))
+    )
+    (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" (at 103.505 42.545 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 103.505 42.545 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 06b06923-cbd8-4d30-9311-3a35754590a5))
+    (pin "2" (uuid 1a5e292b-281d-4e91-9866-c27ed462654b))
+    (instances
+      (project "RoomSensor"
+        (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
+          (reference "J6") (unit 1)
         )
       )
     )
@@ -1614,7 +1659,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR033") (unit 1)
+          (reference "#PWR035") (unit 1)
         )
       )
     )
@@ -1642,7 +1687,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR030") (unit 1)
+          (reference "#PWR031") (unit 1)
         )
       )
     )
@@ -1764,7 +1809,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR041") (unit 1)
+          (reference "#PWR043") (unit 1)
         )
       )
     )
@@ -1821,7 +1866,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR027") (unit 1)
+          (reference "#PWR028") (unit 1)
         )
       )
     )
@@ -1849,7 +1894,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR039") (unit 1)
+          (reference "#PWR041") (unit 1)
         )
       )
     )
@@ -1858,7 +1903,7 @@
   (symbol (lib_id "Device:R_Small") (at 83.82 59.69 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid b5d49552-4e73-4be5-a3a4-9843f889ea4f)
-    (property "Reference" "R12" (at 85.725 59.69 90)
+    (property "Reference" "R16" (at 85.725 59.69 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "1k" (at 83.82 59.69 90)
@@ -1875,7 +1920,7 @@
     (instances
       (project "RoomSensor"
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "R12") (unit 1)
+          (reference "R16") (unit 1)
         )
       )
     )
@@ -1903,7 +1948,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR036") (unit 1)
+          (reference "#PWR038") (unit 1)
         )
       )
     )
@@ -1938,7 +1983,7 @@
   (symbol (lib_id "power:-BATT") (at 83.82 62.23 180) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid c2e7c793-fd81-4969-acb6-0b2b0912a783)
-    (property "Reference" "#PWR026" (at 83.82 58.42 0)
+    (property "Reference" "#PWR027" (at 83.82 58.42 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "-BATT" (at 83.185 64.135 0)
@@ -1954,7 +1999,7 @@
     (instances
       (project "RoomSensor"
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR026") (unit 1)
+          (reference "#PWR027") (unit 1)
         )
       )
     )
@@ -1982,7 +2027,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR044") (unit 1)
+          (reference "#PWR046") (unit 1)
         )
       )
     )
@@ -2010,7 +2055,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR043") (unit 1)
+          (reference "#PWR045") (unit 1)
         )
       )
     )
@@ -2038,7 +2083,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR042") (unit 1)
+          (reference "#PWR044") (unit 1)
         )
       )
     )
@@ -2047,7 +2092,7 @@
   (symbol (lib_id "power:-BATT") (at 112.395 53.975 90) (mirror x) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid d7dfa1a4-adaa-42cf-b726-710dd56a4f19)
-    (property "Reference" "#PWR035" (at 116.205 53.975 0)
+    (property "Reference" "#PWR037" (at 116.205 53.975 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "-BATT" (at 109.22 54.2918 90)
@@ -2063,7 +2108,7 @@
     (instances
       (project "RoomSensor"
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR035") (unit 1)
+          (reference "#PWR037") (unit 1)
         )
       )
     )
@@ -2072,7 +2117,7 @@
   (symbol (lib_id "Device:R_Small") (at 88.9 33.02 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid d825ab81-cba9-441b-8aec-e2ed96389cd8)
-    (property "Reference" "R13" (at 88.9 31.115 90)
+    (property "Reference" "R17" (at 88.9 31.115 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "100" (at 88.9 33.02 90)
@@ -2089,25 +2134,25 @@
     (instances
       (project "RoomSensor"
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "R13") (unit 1)
+          (reference "R17") (unit 1)
         )
       )
     )
   )
 
-  (symbol (lib_id "power:+5V") (at 104.775 36.83 0) (unit 1)
+  (symbol (lib_id "power:+5V") (at 103.505 37.465 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid e3377c33-aa25-443a-9d1b-073d8c8b349d)
-    (property "Reference" "#PWR?" (at 104.775 40.64 0)
+    (property "Reference" "#PWR?" (at 103.505 41.275 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Value" "+5V" (at 104.775 33.3281 0)
+    (property "Value" "+5V" (at 103.505 33.9631 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "" (at 104.775 36.83 0)
+    (property "Footprint" "" (at 103.505 37.465 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Datasheet" "" (at 104.775 36.83 0)
+    (property "Datasheet" "" (at 103.505 37.465 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid 1b07e13c-90c7-4f16-8ff0-c4690db8236f))
@@ -2117,7 +2162,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR032") (unit 1)
+          (reference "#PWR033") (unit 1)
         )
       )
     )
@@ -2145,7 +2190,7 @@
           (reference "#PWR?") (unit 1)
         )
         (path "/df5fb727-aab3-46b2-bf4f-cd58d6f76ee2/d94c8d32-e4e6-42df-bd50-6135d824efff"
-          (reference "#PWR029") (unit 1)
+          (reference "#PWR030") (unit 1)
         )
       )
     )
