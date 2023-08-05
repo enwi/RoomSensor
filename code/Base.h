@@ -14,18 +14,13 @@
 #include <PubSubClient.h>
 #include <esp_now.h>
 
+#include "Config.h"
 #include "Debug.h"
 #include "Key.h"
 #include "mqtt.h"
 
 namespace Base
 {
-    /// @todo Use WiFiManager
-    /// @brief Your WiFi SSID
-    constexpr static const char* SSID = "YourSSID";
-    /// @brief Your WiFi password
-    constexpr static const char* PASS = "YourPassword";
-
     /// @brief LED pin
     // In theory 2 is the on board LED, but it is always on
     constexpr static const uint8_t LED = 2;

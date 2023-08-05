@@ -14,15 +14,11 @@
 #include <PubSubClient.h>
 #include <esp_now.h>
 
+#include "Config.h"
 #include "sleep.h"
 
 namespace TestWiFi
 {
-    /// @brief Your WiFi SSID
-    constexpr static const char* SSID = "YourSSID";
-    /// @brief Your WiFi password
-    constexpr static const char* PASS = "YourPassword";
-
     /// @brief WiFi client used for MQTT
     WiFiClient wifiClient;
     /// @brief MQTT client
