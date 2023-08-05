@@ -1,3 +1,6 @@
+/// @file Debug.h
+/// @author Moritz Wirger (contact@wirmo.de)
+/// @brief Simple debug logger using progmen
 #pragma once
 
 #if (defined(__AVR__))

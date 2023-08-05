@@ -57,5 +57,10 @@
         "unordered_set": "cpp",
         "iomanip": "cpp",
         "map": "cpp"
-    }
+    },
+    "doxdocgen.file.fileOrder": [
+        "file",
+        "author",
+        "brief"
+    ]
 }

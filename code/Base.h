@@ -6,7 +6,6 @@
 #include <ESP8266WiFi.h>
 #endif
 
-#include <array>
 #include <memory>
 #include <set>
 
