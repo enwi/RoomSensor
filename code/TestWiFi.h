@@ -37,8 +37,8 @@ namespace TestWiFi
     {
         Serial.println("[MQTT] Connecting...");
         mqtt.setClient(wifiClient);
-        mqtt.setServer("192.168.2.3", 1883);
-        const bool connected = mqtt.connect("TestWiFi", "mosquitto", "dietpi");
+        mqtt.setServer(MQTT_HOST, MQTT_PORT);
+        const bool connected = mqtt.connect("TestWiFi", MQTT_USER, MQTT_PASS);
         // (mqttConfig.topic + "/lwt").c_str(), 2, true, DISCONNECTED);
 
         if (!connected)

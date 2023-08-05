@@ -42,20 +42,6 @@ namespace Base
         // digitalWrite(LED, on);
     }
 
-    /// @brief Handle the discovery message for the given DataKey
-    /// @tparam clazz Device class
-    /// @tparam unit Data unit
-    /// @param json
-    /// @param mac
-    /// @param key
-    inline void handleDiscovery(const JsonDocument& json, const String& mac, const DataKey& key)
-    {
-        if (json.containsKey(key.getKey()))
-        {
-            key.publishDiscovery(mqtt, mac);
-        }
-    }
-
     /// @brief ESPNow data callback
     /// @param macPtr Pointer to client mac address
     /// @param data Pointer to received data packet
@@ -82,7 +68,10 @@ namespace Base
             RS_DEBUGF("[Base] Sending auto config for %s\n", mac.c_str());
             for (const auto& key : Key::KEYS)
             {
-                handleDiscovery(json, mac, key);
+                if (json.containsKey(key.getKey()))
+                {
+                    key.publishDiscovery(mqtt, mac);
+                }
             }
         }
 
@@ -116,8 +105,8 @@ namespace Base
     {
         RS_DEBUGLN("[MQTT] Connecting...");
         mqtt.setClient(wifiClient);
-        mqtt.setServer("192.168.2.3", 1883);
-        const bool connected = mqtt.connect("EPDBase", "mosquitto", "dietpi");
+        mqtt.setServer(MQTT_HOST, MQTT_PORT);
+        const bool connected = mqtt.connect(MQTT_DEVICE, MQTT_USER, MQTT_PASS);
         // (mqttConfig.topic + "/lwt").c_str(), 2, true, DISCONNECTED);
 
         if (connected)
