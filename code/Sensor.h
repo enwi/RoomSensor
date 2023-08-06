@@ -111,7 +111,8 @@ namespace Sensor
 
         const Voltage battery = Battery::getVoltage();
         const uint8_t soc = Battery::voltageToSOC(battery);
-        json[Key::SOC.getKey()] = soc;
+        json[Key::BATTERY_SOC.getKey()] = soc;
+        json[Key::BATTERY_VOLTAGE.getKey()] = (double)battery.volt;
 
         json[Key::ILLUMINANCE.getKey()] = (uint16_t)LDR::getIlluminance(3.3_V).lx;
 

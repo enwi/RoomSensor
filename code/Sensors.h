@@ -89,7 +89,10 @@ namespace Battery
         // Vin = Vout * (R1 + R2) / R2
         constexpr auto R1 = 1.0_MOhm;
         constexpr auto R2 = 1.0_MOhm;
-        return readADC(PIN) * (R1 + R2) / R2 * 3.3_V / 4096.0;
+        // If voltage is read too low increase it here
+        // constexpr auto factor = (R1 + R2) / R2 * 3.3_V / 4096.0;
+        constexpr auto factor = (R1 + R2) / R2 * 3.5_V / 4096.0;
+        return readADC(PIN) * factor;
     }
 
     constexpr Voltage divider(Resistance r1, Resistance r2, Voltage vout) { return (r1 + r2) / r2 * vout; }

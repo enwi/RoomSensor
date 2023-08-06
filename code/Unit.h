@@ -168,14 +168,19 @@ constexpr const char* toStr()
     return "none";
 };
 template <>
-constexpr const char* toStr<Unit::PERCENTAGE>()
-{
-    return "%";
-};
-template <>
 constexpr const char* toStr<Unit::CELSIUS>()
 {
     return "°C";
+};
+template <>
+constexpr const char* toStr<Unit::LUX>()
+{
+    return "lx";
+};
+template <>
+constexpr const char* toStr<Unit::PERCENTAGE>()
+{
+    return "%";
 };
 template <>
 constexpr const char* toStr<Unit::PA>()
@@ -183,7 +188,7 @@ constexpr const char* toStr<Unit::PA>()
     return "Pa";
 };
 template <>
-constexpr const char* toStr<Unit::LUX>()
+constexpr const char* toStr<Unit::VOLT>()
 {
-    return "lx";
+    return "V";
 };

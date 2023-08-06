@@ -22,8 +22,9 @@ public:
         addDeviceInfo(autoConfig, mac);
 
         autoConfig[HA::Property::DeviceClass] = m_class;
-        autoConfig[HA::Property::Name] = m_name;
+        autoConfig[HA::Property::Name] = mac + " " + m_name;
         autoConfig[HA::Property::StateClass] = "measurement";
+        autoConfig[HA::Property::UniqueId] = mac + "_" + m_key;
         autoConfig[HA::Property::UnitOfMeasurement] = m_unit;
         autoConfig[HA::Property::ValueTemplate] = m_valueTemplate;
 
@@ -64,8 +65,11 @@ constexpr DataKey make_datakey(const char* key, const char* name, const char* va
 namespace Key
 {
     /// @brief Key for State Of Charge in %
-    constexpr static const auto SOC
+    constexpr static const auto BATTERY_SOC
         = make_datakey<SensorClass::BATTERY, Unit::PERCENTAGE>("soc", "SOC", "{{value_json.soc}}");
+    /// @brief Key for battery voltage measurement in volt
+    constexpr static const auto BATTERY_VOLTAGE
+        = make_datakey<SensorClass::VOLTAGE, Unit::VOLT>("bvo", "Battery Voltage", "{{value_json.bvo}}");
     /// @brief Key for temperature measurement in °C
     constexpr static const auto TEMPERATURE
         = make_datakey<SensorClass::TEMPERATURE, Unit::CELSIUS>("tem", "Temperature", "{{value_json.tem|round(1)}}");
@@ -79,6 +83,7 @@ namespace Key
     constexpr static const auto ILLUMINANCE
         = make_datakey<SensorClass::ILLUMINANCE, Unit::LUX>("ill", "Illuminance", "{{value_json.ill}}");
 
-    constexpr static const std::array<DataKey, 5> KEYS = {SOC, TEMPERATURE, HUMIDITY, PRESSURE, ILLUMINANCE};
+    constexpr static const std::array<DataKey, 6> KEYS
+        = {BATTERY_SOC, BATTERY_VOLTAGE, TEMPERATURE, HUMIDITY, PRESSURE, ILLUMINANCE};
 
 } // namespace Key
