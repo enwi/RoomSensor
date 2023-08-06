@@ -56,7 +56,8 @@
         "set": "cpp",
         "unordered_set": "cpp",
         "iomanip": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "iostream": "cpp"
     },
     "doxdocgen.file.fileOrder": [
         "file",

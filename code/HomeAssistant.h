@@ -1,6 +1,6 @@
 #pragma once
 
-#include <map>
+#include <vector>
 
 namespace HA
 {
@@ -36,19 +36,43 @@ namespace HA
 
     namespace Property
     {
+        /// @brief Information about the device this entity is a part of to tie it into the device registry. Only works
+        /// when unique_id is set. At least one of identifiers or connections must be present to identify the device.
+        /// map (optional)
         constexpr static const char* Device PROGMEM = "dev";
-        constexpr static const char* DeviceClass PROGMEM = "dev_cla";
+        /// @brief A link to the webpage that can manage the configuration of this device.
+        /// Can be either an http://, https:// or an internal homeassistant:// URL.
+        /// string (optional)
         constexpr static const char* DeviceConfigUrl PROGMEM = "cu";
+        /// @brief A list of connections of the device to the outside world as a list of tuples [connection_type,
+        /// connection_identifier].
+        /// For example the MAC address of a network interface: "connections": [["mac","02:5b:26:a8:dc:12"]].
+        /// list (optional)
         constexpr static const char* DeviceConnections PROGMEM = "cns";
+        /// @brief The hardware version of the device.
+        /// string (optional)
         constexpr static const char* DeviceHardwareVersion PROGMEM = "hw";
+        /// @brief A list of IDs that uniquely identify the device. For example a serial number.
+        /// string | list (optional)
         constexpr static const char* DeviceIdentifiers PROGMEM = "ids";
+        /// @brief The manufacturer of the device.
+        /// string (optional)
         constexpr static const char* DeviceManufacturer PROGMEM = "mf";
+        /// @brief The model of the device.
+        /// string (optional)
         constexpr static const char* DeviceModel PROGMEM = "mdl";
+        /// @brief The firmware version of the device.
+        /// string (optional)
         constexpr static const char* DeviceSoftwareVersion PROGMEM = "sw";
+        /// @brief Suggest an area if the device isn’t in one yet.
+        /// string (optional)
         constexpr static const char* DeviceSuggestedArea = "sa";
+        /// @brief Identifier of a device that routes messages between this device and Home Assistant. Examples of such
+        /// devices are hubs, or parent devices of a sub-device. This is used to show device topology in Home Assistant.
+        /// string (optional)
         constexpr static const char* DeviceViaDevice = "via_device";
 
-        /// @brief Can be DeviceName and Entity Name
+        /// @brief Can be DeviceName and Entity Name, but in both cases optional
         constexpr static const char* Name PROGMEM = "name";
 
         constexpr static const char* ActionTemplate PROGMEM = "act_tpl";
@@ -80,6 +104,9 @@ namespace HA
         constexpr static const char* CodeTriggerRequired PROGMEM = "cod_trig_req";
         constexpr static const char* ContentType PROGMEM = "cont_type";
         constexpr static const char* CurrentTemperatureTemplate PROGMEM = "curr_temp_tpl";
+        /// @brief The type/class of a sensor to set the icon in the frontend. The device_class can be null.
+        /// device_class (optional, default: None)
+        constexpr static const char* DeviceClass PROGMEM = "dev_cla";
         constexpr static const char* DirectionCommandTemplate PROGMEM = "dir_cmd_tpl";
         constexpr static const char* DirectionValueTemplate PROGMEM = "dir_val_tpl";
         constexpr static const char* DockedTemplate PROGMEM = "dock_tpl";
@@ -100,10 +127,15 @@ namespace HA
         constexpr static const char* ExpireAfter PROGMEM = "exp_aft";
         constexpr static const char* FanModeCommandTemplate PROGMEM = "fan_mode_cmd_tpl";
         constexpr static const char* FanModeStateTemplate PROGMEM = "fan_mode_stat_tpl";
+        /// @brief Sends update events even if the value hasn’t changed. Useful if you want to have meaningful value
+        /// graphs in history.
+        /// boolean (optional, default: false)
         constexpr static const char* ForceUpdate PROGMEM = "frc_upd";
         constexpr static const char* GreenTemplate PROGMEM = "g_tpl";
         constexpr static const char* HsCommandTemplate PROGMEM = "hs_cmd_tpl";
         constexpr static const char* HsValueTemplate PROGMEM = "hs_val_tpl";
+        /// @brief Icon for the entity. Material Design Icon. Prefix name with mdi:
+        /// icon (optional)
         constexpr static const char* Icon PROGMEM = "ic";
         constexpr static const char* ImageEncoding PROGMEM = "img_e";
         constexpr static const char* Initial PROGMEM = "init";
@@ -234,9 +266,18 @@ namespace HA
         constexpr static const char* TiltOptimistic PROGMEM = "tilt_opt";
         constexpr static const char* TiltStatusTemplate PROGMEM = "tilt_status_tpl";
         constexpr static const char* Title PROGMEM = "tit";
+        /// @brief An ID that uniquely identifies an entitiy (sensor, ...)
+        /// string (optional)
+        /// @note Home Assistant will raise an exception if two entities have the same unique ID
         constexpr static const char* UniqueId PROGMEM = "uniq_id";
+        /// @brief Defines the units of measurement of a sensor, if any.
+        /// string (optional, default: None)
+        /// @note The unit_of_measurement can be null.
         constexpr static const char* UnitOfMeasurement PROGMEM = "unit_of_meas";
         constexpr static const char* UrlTemplate PROGMEM = "url_tpl";
+        /// @brief Defines a template to extract the value.
+        /// template (optional)
+        /// @note If the template throws an error, the current state will be used instead.
         constexpr static const char* ValueTemplate PROGMEM = "val_tpl";
         constexpr static const char* whiteScale PROGMEM = "whit_scl";
         constexpr static const char* XyCommandTemplate PROGMEM = "xy_cmd_tpl";
@@ -315,160 +356,85 @@ namespace HA
         constexpr static const char* XyState PROGMEM = "xy_stat_t";
     } // namespace Topic
 
-    // struct AProperty
-    // {
-    //     const char* key;
-    //     const char* value;
-
-    //     constexpr AProperty(const char* key, const char* value) : key(key), value(value) { }
-    // };
-
-    // template <size_t N>
-    // class TestEntity
-    // {
-    // public:
-    //     constexpr TestEntity(const std::array<AProperty, N>& properties) : properties(properties) { }
-
-    //     bool publishDiscovery(std::function<bool(const String&, const JsonDocument&, const bool retain)> publish)
-    //     {
-    //         StaticJsonDocument<600> autoConfig;
-    //         for (const auto& entry : properties)
-    //         {
-    //             autoConfig[entry.key] = entry.value;
-    //         }
-
-    //         return publish("", autoConfig, true);
-    //     }
-
-    //     std::array<AProperty, N> properties;
-    // };
-
-    // constexpr static const auto bli = TestEntity<1>({AProperty(Property::UniqueId, "")});
-
-    // template <typename... properties>
-    // TestEntity<sizeof...(properties)> make_entity(properties p)
-    // {
-    //     return TestEntity<sizeof...(p)>(p);
-    // }
-
-    // constexpr static const auto hallal = make_entity(AProperty(Property::UniqueId, ""));
-
-    // class Device
-    // {
-    // public:
-    //     constexpr Device(const char* uid) : m_uid(uid) { }
-
-    //     constexpr const char* getUid() { return m_uid; }
-
-    //     void setManufacturer(const char* manufacturer) { m_manufacturer = manufacturer; }
-
-    // private:
-    //     constexpr const char* m_uid;
-    //     constexpr const char* m_manufacturer = nullptr;
-    // };
-
-    typedef struct Device
+    class BaseType
     {
-        const char* uid;
-        const char* configurationUrl;
-        // todo connections
-        const char* hardwareVersion;
-        // todo identifiers
-        const char* manufacturer;
-        const char* model;
-        const char* name;
-        const char* suggestedArea;
-        const char* softwareVersion;
-        const char* viaDevice;
-
-        void publish()
+    public:
+        /// @brief Append a new property to the internal vector of properties
+        /// @note The vector is not checked for duplicate keys
+        /// @param key Property key
+        /// @param value Property value
+        void addProperty(const char* key, const char* value) { m_properties.emplace_back(key, value); }
+        /// @brief Set a specific property of the internal list. If it does not exist it will be created.
+        /// @param key Property key
+        /// @param value Property value
+        void setProperty(const char* key, const char* value)
         {
-            if (!uid)
+            auto it = std::find_if(m_properties.begin(), m_properties.end(),
+                [&](std::pair<const char*, const char*>& property) { return strcmp(property.first, key) == 0; });
+            if (it == m_properties.end())
             {
+                addProperty(key, value);
                 return;
             }
+            *it = {key, value};
         }
-    };
 
-    constexpr static const Device myDevice = {
-        .uid = "",
-        .manufacturer = "test",
-    };
-
-    class BEntity
-    {
-    public:
-        BEntity(const char* type, const char* uid) : type(type), uid(uid) { }
-        const char* type;
-        const char* uid;
-    };
-
-    class BSensor : public BEntity
-    {
-    public:
-        BSensor(const char* type, const char* uid, const char* unitOfMeasurement)
-            : BEntity(type, uid), unitOfMeasurement(unitOfMeasurement)
-        { }
-
-        const char* unitOfMeasurement;
-    };
-
-    // class BSensorBuilder
-    // {
-    //     const char* type;
-    //     const char* uid;
-    //     const char* unitOfMeasurement;
-
-    // public:
-    //     constexpr BSensorBuilder setType(const char* type)
-    //     {
-    //         this->type = type;
-    //         return *this;
-    //     }
-    //     constexpr BSensorBuilder setUid(const char* uid)
-    //     {
-    //         this->uid = uid;
-    //         return *this;
-    //     }
-    //     constexpr BSensorBuilder setUnitOfMeasurement(const char* unitOfMeasurement)
-    //     {
-    //         this->unitOfMeasurement = unitOfMeasurement;
-    //         return *this;
-    //     }
-
-    //     constexpr BSensor get() { return BSensor(type, uid, unitOfMeasurement); }
-    // };
-
-    // constexpr static const auto blurp = BSensorBuilder().setUid("hallal").get();
-
-    // constexpr static const BSensor mySensor = {
-    //     {
-    //         .uid = "",
-    //     },
-    //     .unitOfMeasurement = "test",
-    // };
-
-    // class DeviceBuilder
-    // {
-    // public:
-    //     constexpr DeviceBuilder(/* args */) { }
-    // };
-
-    class BaseEntity
-    {
-    public:
-        BaseEntity(const char* type, const char* uid) : m_type(type) { setProperty(Property::UniqueId, uid); }
-
-        constexpr const char* getType() { return m_type; }
-        constexpr const char* getUid() { return m_properties.at(Property::UniqueId); }
-
-        bool publishDiscovery(std::function<bool(const String&, const JsonDocument&, const bool retain)> publish)
+    protected:
+        void addProperties(JsonVariant json) const
         {
-            StaticJsonDocument<600> autoConfig;
             for (const auto& entry : m_properties)
             {
-                autoConfig[entry.first] = entry.second;
+                json[entry.first] = entry.second;
             }
+        }
+
+        virtual void addJson(JsonDocument& json) const = 0;
+
+    protected:
+        std::vector<std::pair<const char*, const char*>> m_properties = {};
+    };
+
+    class BaseEntity; // Forward declaration
+    class Device : public BaseType
+    {
+        friend BaseEntity;
+
+    public:
+        Device(const char* uid) : m_uid(uid) { }
+
+    protected:
+        void addJson(JsonDocument& json) const override
+        {
+            auto dev = json[HA::Property::Device];
+            addProperties(dev);
+            dev.createNestedArray(HA::Property::DeviceIdentifiers).add(m_uid);
+        }
+
+    private:
+        const char* m_uid;
+    };
+
+    class BaseEntity : public BaseType
+    {
+    public:
+        BaseEntity(const char* type, const char* uid, std::shared_ptr<Device> device) : m_type(type), m_device(device)
+        {
+            addProperty(Property::UniqueId, uid);
+        }
+
+        constexpr const char* getType() { return m_type; }
+        // constexpr const char* getUid() { return m_properties.at(Property::UniqueId); }
+
+        bool publishDiscovery(
+            std::function<bool(const String& topic, const JsonDocument& json, const bool retain)> publish)
+        {
+            StaticJsonDocument<600> autoConfig;
+
+            if (m_device)
+            {
+                m_device->addJson(autoConfig);
+            }
+            addJson(autoConfig);
 
             return publish("", autoConfig, true);
         }
@@ -491,43 +457,52 @@ namespace HA
         }
 
     protected:
-        void setProperty(const char* property, const char* value) { m_properties[property] = value; }
-        virtual void add() = 0;
-
-    private:
-        void addDeviceInfo(JsonDocument& json, const String& deviceID)
-        {
-            auto dev = json[HA::Property::Device];
-            dev[HA::Property::DeviceManufacturer] = "enwi";
-            // dev[HA::Property::DeviceModel] = String(MODEL) + " " + HARDWARE_VERSION;
-            dev[HA::Property::Name] = deviceID;
-            // dev[HA::Property::DeviceSoftwareVersion] = SOFTWARE_VERSION;
-            dev[HA::Property::DeviceConfigUrl] = String("http://") + WiFi.localIP().toString();
-
-            dev.createNestedArray(HA::Property::DeviceIdentifiers).add(deviceID);
-        }
+        void addJson(JsonDocument& json) const override { addProperties(json); }
 
     private:
         const char* m_type;
-        std::map<const char*, const char*> m_properties = {};
+        std::shared_ptr<Device> m_device;
     };
 
+    /// @brief Represents a sensor
+    /// For all possible properties refer to https://www.home-assistant.io/integrations/sensor.mqtt/
     class Sensor : public BaseEntity
     {
     public:
-        Sensor(const char* uid) : BaseEntity(HA::Entity::Sensor, uid) { }
+        Sensor(const char* uid, std::shared_ptr<Device> device) : BaseEntity(HA::Entity::Sensor, uid, device) { }
 
-        void add() override { }
-
-        void setUnitOfMeasurement(const char* unit) { setProperty(Property::UnitOfMeasurement, unit); }
+        void setUnitOfMeasurement(const char* unit) { addProperty(Property::UnitOfMeasurement, unit); }
     };
 
     template <SensorClass clazz, Unit unit>
-    Sensor make_sensor(const char* uid)
+    constexpr Sensor make_sensor(const char* uid, std::vector<std::pair<const char*, const char*>> properties = {},
+        std::shared_ptr<Device> device = nullptr)
     {
-        Sensor sensor = Sensor(uid);
-        sensor.setUnitOfMeasurement(toStr<unit>());
+        Sensor sensor = Sensor(uid, device);
+        sensor.addProperty(Property::DeviceClass, toStr<clazz>());
+        sensor.addProperty(Property::UnitOfMeasurement, toStr<unit>());
+        for (const auto& property : properties)
+        {
+            sensor.addProperty(property.first, property.second);
+        }
         return sensor;
     }
+
+    std::shared_ptr<Device> make_device(
+        const char* uid, std::vector<std::pair<const char*, const char*>> properties = {})
+    {
+        std::shared_ptr<Device> device = std::make_shared<Device>(uid);
+        for (const auto& property : properties)
+        {
+            device->addProperty(property.first, property.second);
+        }
+        return device;
+    }
+
+    auto mDevice = make_device(
+        "TestDevice", {{Property::DeviceManufacturer, "enwi"}, {Property::DeviceSoftwareVersion, "2023.08.06"}});
+    auto mSensor = make_sensor<SensorClass::TEMPERATURE, Unit::CELSIUS>("uid",
+        {{Property::Name, "Temperature"}, {Property::Icon, "mdi:test"},
+            {Property::ValueTemplate, "{{value_json.tem|round(1)}}"}});
 
 } // namespace HA

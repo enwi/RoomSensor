@@ -1,5 +1,8 @@
 #pragma once
 
+/// @brief Software version
+constexpr static const char* SOFTWARE_VERSION PROGMEM = "2023.08.06";
+
 /// @todo Use WiFiManager
 /// @brief Your WiFi SSID
 constexpr static const char* SSID PROGMEM = "YourSSID";

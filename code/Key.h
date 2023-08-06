@@ -4,66 +4,6 @@
 #include "Unit.h"
 #include "mqtt.h"
 
-// template <SensorClass clazz, Unit... units>
-// class SensorClassTest
-// {
-// public:
-//     constexpr SensorClassTest() { }
-
-//     static constexpr std::array<Unit, sizeof...(units)> value = {{units...}};
-// };
-
-// constexpr static const auto test = SensorClassTest<SensorClass::POWER, Unit::POWER_WATT, Unit::POWER_KILO_WATT>();
-
-// template <SensorClass clazz, std::enable_if>
-// void make_test()
-// { }
-
-// namespace HA
-// {
-//     class Sensor
-//     {
-//     public:
-//         constexpr Sensor(const SensorClass clazz, const char* classStr, const Unit unit, const char* unitStr)
-//             : m_class(clazz), m_classStr(classStr), m_unit(unit), m_unitStr(unitStr)
-//         { }
-
-//         constexpr SensorClass getClass() { return m_class; }
-//         constexpr const char* getClassStr() { return m_classStr; }
-//         constexpr Unit getUnit() { return m_unit; }
-//         constexpr const char* getUnitStr() { return m_unitStr; }
-
-//     private:
-//         SensorClass m_class;
-//         const char* m_classStr;
-//         Unit m_unit;
-//         const char* m_unitStr;
-//     };
-
-//     template <SensorClass clazz, Unit unit>
-//     constexpr Sensor make_device()
-//     {
-//         return Sensor(clazz, toStr<clazz>(), unit, toStr<unit>());
-//     }
-
-//     constexpr static const Sensor VoltAmpere = make_device<SensorClass::APPARENT_POWER,
-//     Unit::ELECTRICAL_VOLT_AMPERE>();
-
-//     // constexpr static const Sensor VoltAmpere = make_device<DeviceClass::AQI, Unit::none>();
-
-//     constexpr static const Sensor Watt = make_device<SensorClass::POWER, Unit::POWER_WATT>();
-//     constexpr static const Sensor KiloWatt = make_device<SensorClass::POWER, Unit::POWER_KILO_WATT>();
-
-//     constexpr static const Sensor Voltage = make_device<SensorClass::VOLTAGE, Unit::VOLT>();
-
-//     constexpr static const Sensor WattHour = make_device<SensorClass::ENERGY, Unit::ENERGY_WATT_HOUR>();
-//     constexpr static const Sensor KiloWattHour = make_device<SensorClass::ENERGY, Unit::ENERGY_KILO_WATT_HOUR>();
-
-//     // constexpr static const Sensor Current = make_device<SensorClass::CURRENT, Unit::ELECTRICAL_CURRENT_AMPERE>();
-
-//     // constexpr static const Sensor VoltAmpere = make_device<SensorClass::de, Unit::ELECTRICAL_VOLT_AMPERE>();
-// } // namespace HA
-
 class DataKey
 {
 public:
@@ -78,7 +18,32 @@ public:
 
     void publishDiscovery(PubSubClient& mqtt, const String& mac) const
     {
-        publishSensorDiscovery(mqtt, mac, m_name, m_key, getClass(), getUnit(), "measurement", m_valueTemplate);
+        StaticJsonDocument<600> autoConfig;
+        addDeviceInfo(autoConfig, mac);
+
+        autoConfig[HA::Property::DeviceClass] = m_class;
+        autoConfig[HA::Property::Name] = m_name;
+        autoConfig[HA::Property::StateClass] = "measurement";
+        autoConfig[HA::Property::UnitOfMeasurement] = m_unit;
+        autoConfig[HA::Property::ValueTemplate] = m_valueTemplate;
+
+        autoConfig[HA::Topic::Base] = "EPDBase/" + mac;
+        autoConfig[HA::Topic::State] = "~/state";
+
+        const String topic = "homeassistant/sensor/" + mac + "/" + m_key + "/config";
+        publishJSON(mqtt, topic, autoConfig, true);
+    }
+
+private:
+    void addDeviceInfo(JsonDocument& json, const String& deviceID) const
+    {
+        auto dev = json[HA::Property::Device];
+        dev[HA::Property::DeviceManufacturer] = "wirmo";
+        dev[HA::Property::Name] = deviceID;
+        dev[HA::Property::DeviceSoftwareVersion] = SOFTWARE_VERSION;
+        dev[HA::Property::DeviceConfigUrl] = String("http://") + WiFi.localIP().toString();
+
+        dev.createNestedArray(HA::Property::DeviceIdentifiers).add(deviceID);
     }
 
 private:
@@ -88,20 +53,6 @@ private:
     const char* m_name;
     const char* m_valueTemplate;
 };
-
-// namespace Sensor
-// {
-//     typedef DataKey<SensorClass::BATTERY, Unit::PERCENTAGE> BatteryPercentage;
-
-//     typedef DataKey<SensorClass::HUMIDITY, Unit::PERCENTAGE> Humidity;
-
-//     typedef DataKey<SensorClass::PRESSURE, Unit::PRESSURE_PA> PressurePa;
-
-//     typedef DataKey<SensorClass::TEMPERATURE, Unit::TEMPERATURE_CELSIUS> TemperatureCelsius;
-
-//     typedef DataKey<SensorClass::ILLUMINANCE, Unit::LIGHT_LUX> Illuminance;
-
-// } // namespace Sensor
 
 template <SensorClass clazz, Unit unit>
 constexpr DataKey make_datakey(const char* key, const char* name, const char* valueTemplate)
