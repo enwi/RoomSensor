@@ -36,7 +36,7 @@ constexpr T clamp(const T min, const T max, const T value)
 namespace EPD
 {
     constexpr static const uint8_t epdh = 128;
-    constexpr static const uint8_t epdw = 296;
+    constexpr static const uint16_t epdw = 296;
     constexpr long double height(const uint8_t lower) { return (epdh - lower) / 2.0; }
     constexpr auto third = height(16);
 

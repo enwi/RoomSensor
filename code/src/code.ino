@@ -1,9 +1,18 @@
 #include "Base.h"
 #include "Sensor.h"
-// #include "TestBLE.h"
-// #include "TestESPNow.h"
-// #include "TestSensor.h"
-// #include "TestWiFi.h"
+
+#ifdef TEST_BLE
+#include "TestBLE.h"
+#endif
+#ifdef TEST_ESPNOW
+#include "TestESPNow.h"
+#endif
+#ifdef TEST_SENSOR
+#include "TestSensor.h"
+#endif
+#ifdef TEST_WIFI
+#include "TestWiFi.h"
+#endif
 
 enum class Type
 {
@@ -15,14 +24,9 @@ enum class Type
     TEST_SENSOR,
 };
 
-/// @brief Select which code to use
-/// @note In order to receive ESP NOW messages while the BASE is connected to WiFi
-/// you need to make sure that the SENSOR is using the same WiFi channel as the WiFi network
-constexpr static const Type type = Type::SENSOR;
-
 void setup()
 {
-    switch (type)
+    switch (Type::TYPE)
     {
     case Type::BASE:
         Base::setup();
@@ -47,7 +51,7 @@ void setup()
 
 void loop()
 {
-    switch (type)
+    switch (Type::TYPE)
     {
     case Type::BASE:
         Base::loop();

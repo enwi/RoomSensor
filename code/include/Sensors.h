@@ -42,7 +42,7 @@ namespace BME680
 
         while (!bme680.performReading()) { }
 
-        return {bme680.temperature, bme680.humidity, bme680.pressure, bme680.gasResistance, true};
+        return {bme680.temperature, (uint8_t)bme680.humidity, bme680.pressure, bme680.gasResistance, true};
         // return {bme680.temperature, bme680.humidity, bme680.pressure, bme680.gas_resistance, true};
     }
 } // namespace BME680
