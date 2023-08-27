@@ -177,12 +177,26 @@ namespace EPD
         drawWindow(epd, data.humidity);
     }
 
-    void update(ONE_BIT_DISPLAY& epd, const DisplayData& data)
+    /// @brief Update the EPD
+    ///
+    /// @param epd
+    /// @param data
+    /// @param fast Do a fast update
+    void update(ONE_BIT_DISPLAY& epd, const DisplayData& data, const bool fast = false)
     {
         draw(epd, data);
         // epd.display(true, false); // do a full update, but don't wait for it
         // epd.display(true, true); // do a full update and wait for it
-        epd.display(); // do a full update and wait for completion
+        // if (fast)
+        // {
+        //     const int result = epd.displayFast();
+        //     RS_DEBUGF("displayFast %d\n", result);
+        // }
+        // else
+        // {
+        const int result = epd.display(true, false); // do a full update and wait for completion
+        RS_DEBUGF("display %d\n", result);
+        // }
 
         // epd.setPower(false);
         // epd.sleep();

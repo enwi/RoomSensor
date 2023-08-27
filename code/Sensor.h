@@ -20,6 +20,8 @@
 #include "StopWatch.h"
 #include "sleep.h"
 
+RTC_DATA_ATTR int bootCount = 0;
+
 namespace Sensor
 {
     /// @brief WiFi channel to use for sending ESP NOW data
@@ -84,37 +86,46 @@ namespace Sensor
         StopWatch total;
         total.start();
 #endif
+        // Increment boot number and print it every reboot
+        ++bootCount;
+
         // Turn LED on
         pinMode(33, OUTPUT);
         digitalWrite(33, HIGH);
 #ifdef RS_DEBUG_SERIAL
         // Init Serial Monitor
         RS_DEBUG_SERIAL.begin(115200);
+        RS_DEBUG_SERIAL.printf("Boot #%d\n", bootCount);
 #endif
 
 #ifdef RS_DEBUG_SERIAL
         StopWatch watch;
         watch.start();
 #endif
-
+        // Turn sensor power on
+        pinMode(14, OUTPUT);
+        digitalWrite(14, LOW);
         // Set values to send
         Wire.begin(SDA, SCL, 1000000);
         // Turn LED off
         digitalWrite(33, LOW);
         const auto sensor = BME680::read();
         Wire.end();
+        const uint16_t luminance = (uint16_t)LDR::getIlluminance(3.3_V).lx;
+        // Turn sensor power off
+        digitalWrite(14, HIGH);
+
         // Data being sent
         StaticJsonDocument<128> json;
         json[Key::TEMPERATURE.getKey()] = sensor.temperature;
         json[Key::HUMIDITY.getKey()] = sensor.humidity;
         json[Key::PRESSURE.getKey()] = sensor.pressure;
+        json[Key::ILLUMINANCE.getKey()] = luminance;
 
         const Voltage battery = Battery::getVoltage();
         const uint8_t soc = Battery::voltageToSOC(battery);
         json[Key::BATTERY_SOC.getKey()] = soc;
         json[Key::BATTERY_VOLTAGE.getKey()] = (double)battery.volt;
-
-        json[Key::ILLUMINANCE.getKey()] = (uint16_t)LDR::getIlluminance(3.3_V).lx;
 
         RS_DEBUGF("Sensors: %dms\n", std::chrono::duration_cast<std::chrono::milliseconds>(watch.stop()));
         RS_DEBUGF("Battery: %.3fV\n", battery);
@@ -137,11 +148,13 @@ namespace Sensor
 
         ONE_BIT_DISPLAY epd;
         EPD::init(epd);
-        EPD::update(epd, displayData);
+        EPD::update(epd, displayData, bootCount % 24 != 1);
         RS_DEBUGF("EPD: %dms\n", std::chrono::duration_cast<std::chrono::milliseconds>(watch.stop()));
 
         RS_DEBUGF("Total time: %dms\n", std::chrono::duration_cast<std::chrono::milliseconds>(total.stop()));
-        sleep(std::chrono::minutes(3));
+        // sleep(std::chrono::seconds(330)); // Accomodate sleeping 30s before epd is done updating
+        sleep(std::chrono::seconds(210)); // Accomodate sleeping 30s before epd is done updating
+        // sleep(std::chrono::seconds(20));
     }
 
     inline void loop() { }
