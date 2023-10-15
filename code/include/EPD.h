@@ -37,7 +37,10 @@ namespace EPD
 {
     constexpr static const uint8_t epdh = 128;
     constexpr static const uint16_t epdw = 296;
-    constexpr long double height(const uint8_t lower) { return (epdh - lower) / 2.0; }
+    constexpr long double height(const uint8_t lower)
+    {
+        return (epdh - lower) / 2.0;
+    }
     constexpr auto third = height(16);
 
     constexpr static const uint8_t largeThirdHeight = 56; /// 56 pixel large third
@@ -54,7 +57,10 @@ namespace EPD
     constexpr static const uint8_t SCK = 18;
     constexpr static const uint8_t MOSI = 23;
 
-    constexpr const uint8_t calcPitch(const uint8_t size) { return std::ceil(size / 8.0); }
+    constexpr const uint8_t calcPitch(const uint8_t size)
+    {
+        return std::ceil(size / 8.0);
+    }
     static_assert(calcPitch(50) == 7);
 
     void init(ONE_BIT_DISPLAY& epd)
@@ -194,7 +200,8 @@ namespace EPD
         // }
         // else
         // {
-        const int result = epd.display(true, false); // do a full update and wait for completion
+        const int result = epd.display(true, false); // do a full update, but don't wait for it
+        // const int result = epd.display(true, true); // do a full update and wait for it
         RS_DEBUGF("display %d\n", result);
         // }
 

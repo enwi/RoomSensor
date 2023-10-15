@@ -36,7 +36,10 @@ namespace Sensor
     };
 
     /// @brief Print free RAM
-    inline void printRAM() { RS_DEBUGF("Free RAM is %d\n", heap_caps_get_free_size(MALLOC_CAP_INTERNAL)); }
+    inline void printRAM()
+    {
+        RS_DEBUGF("Free RAM is %d\n", heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
+    }
 
     /// @brief Setup ESPNow for sending broadcast messages
     inline void setupESPNow()
@@ -154,6 +157,7 @@ namespace Sensor
         RS_DEBUGF("Total time: %dms\n", std::chrono::duration_cast<std::chrono::milliseconds>(total.stop()));
         // sleep(std::chrono::seconds(330)); // Accomodate sleeping 30s before epd is done updating
         sleep(std::chrono::seconds(210)); // Accomodate sleeping 30s before epd is done updating
+        // sleep(std::chrono::minutes(3)); // 3 minutes
         // sleep(std::chrono::seconds(20));
     }
 
